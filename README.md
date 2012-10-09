@@ -15,11 +15,13 @@ Code Cleaner 可以帮助Web开发人员快速获取简洁的DOM结构，当某�
 
 使用方法：
 
-1. 安装完成后该扩展会出现在“开发人员工具”中，如截图所示；
+1. 安装完成后该扩展会出现在“开发人员工具”中；
 
 2. 使用“Elements”面板，或直接在页面上点击鼠标右键“审查元素”；
 
 3. 在“Elements”面板中选中元素，点击右键“Copy as HTML”；
 
 4. 点击“Code Cleaner”选项卡，将代码粘贴到文本域中，根据自己的需要选择要清理的部分，直到满意为止。
+
+项目主页：http://44ux.com/DevTools/2012/04/27/code-cleaner-chrome-extention/
 
