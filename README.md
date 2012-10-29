@@ -23,5 +23,5 @@ Code Cleaner 可以帮助Web开发人员快速获取简洁的DOM结构，当某�
 
 4. 点击“Code Cleaner”选项卡，将代码粘贴到文本域中，根据自己的需要选择要清理的部分，直到满意为止。
 
-项目主页：http://44ux.com/DevTools/2012/04/27/code-cleaner-chrome-extention/
+项目主页：http://44ux.com/blog/2012/04/27/code-cleaner-chrome-extention/
 
