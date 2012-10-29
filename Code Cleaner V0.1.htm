@@ -8,7 +8,8 @@
         fieldset{padding:5px 0;border:0 none;}
         ul{list-style:none;}
         .wrapper{width:860px;overflow:hidden;padding:20px;font:12px/1.5em "Microsoft Yahei";color:#333;}
-        .wrapper h1{font-size:16px;padding-bottom:15px;}
+        .hd h1{font-size:16px;padding-bottom:15px;}
+        .bd{overflow: hidden; *zoom:1;}
         .main{float:left;width:580px;}
         .main .code{width:580px;height:580px;resize:none;font-family:"courier new";font-size:12px;}
         .toolbar{float:right;width:264px;}
@@ -21,7 +22,6 @@
         .toolbar h2 .tip{padding-left:110px;font-size:12px;}
         .toolbar .advanced_panel{padding:10px;position:relative;border-radius:3px;border:1px solid #ddd;margin-top:5px;}
         .toolbar .advanced_panel label{display:block;}
-        .toolbar .advanced_panel .custom_img{width:40px;*+vertical-align:middle;}
         .toolbar .advanced_panel input{width:190px;margin-bottom:5px;padding:2px;}
         .toolbar button{cursor:pointer;padding:2px;*padding:0;*+vertical-align:-2px;margin-right:2px;}
         .toolbar input.common_attr{width:100px;}
@@ -31,68 +31,70 @@
 <body>
 <!--
     @title Code Cleaner V0.1
-    @desc html 代码清理工具，清除无用标签属性，使代码可复用
     @author jiguang
     @mail jiguang1984#gmail.com
+    @site http://44ux.com
     @date 20110728
 -->
 
 <div class="wrapper">
-    <h1>Code Cleaner V0.1</h1>
+    <div class="hd"><h1>Code Cleaner V0.1</h1></div>
+    <div class="bd">
     <div class="main">
          <textarea id="code" class="code"></textarea>
     </div>
     <div class="toolbar">
-         <!-- value与替换方法名对应 -->
          <div id="opt_panel" class="opt_panel" >
          <ul id="opt" class="opt" >
-             <li><label for="opt_1"><input id="opt_1" title="去掉className" name="" type="checkbox" value="cleanClassName" />className</label></li>
-             <li><label for="opt_2"><input id="opt_2" title="去掉Id" name="" type="checkbox" value="cleanId" checked="checked"/>id</label></li>
-             <li><label for="opt_3"><input id="opt_3" title="去掉行内样式" name="" type="checkbox" value="cleanInlineStyle" checked="checked"/>inline-style</label></li>
-             <li><label for="opt_4"><input id="opt_4" title="去掉Table多余标签" name="" type="checkbox" value="cleanTable" checked="checked"/> table</label></li>
-             <li><label for="opt_5"><input id="opt_5" title="去掉链接多余内容" name="" type="checkbox" value="cleanLink" checked="checked"/>Link</label></li>
-             <li><label for="opt_6"><input id="opt_6" title="去掉Img多余内容" name="" type="checkbox" value="cleanImg" checked="checked"/>img</label></li>
-             <li><label for="opt_7"><input id="opt_7" title="去掉Script标签及内容" name="" type="checkbox" value="cleanScript" checked="checked"/>script</label></li>
-             <li><label for="opt_8"><input id="opt_8" title="去掉Br" name="" type="checkbox" value="cleanBr" checked="checked"/>br</label></li>
-             <li><label for="opt_9"><input id="opt_9" title="去掉Html注释" name="" type="checkbox" value="cleanHtmlComment" checked="checked"/>html-comment</label></li>
-             <li><label for="opt_100"><input id="opt_100" title="去掉空行" name="" type="checkbox" value="cleanSpaceRow" checked="checked"/>blank</label><!-- 请将清除空行操作保持在最后，可以清除掉前面操作残留的空行 --></li>
+             <li><label for="opt_1"><input id="opt_1" title="remove className" name="" type="checkbox" value="cleanClassName" />className</label></li>
+             <li><label for="opt_2"><input id="opt_2" title="remove Id" name="" type="checkbox" value="cleanId" checked="checked"/>id</label></li>
+             <li><label for="opt_3"><input id="opt_3" title="remove inline style" name="" type="checkbox" value="cleanInlineStyle" checked="checked"/>inline-style</label></li>
+             <li><label for="opt_4"><input id="opt_4" title="remove table attributes" name="" type="checkbox" value="cleanTable" checked="checked"/> table</label></li>
+             <li><label for="opt_5"><input id="opt_5" title="remove link" name="" type="checkbox" value="cleanLink" checked="checked"/>Link</label></li>
+             <li><label for="opt_6"><input id="opt_6" title="remove img " name="" type="checkbox" value="cleanImg" checked="checked"/>img</label></li>
+             <li><label for="opt_7"><input id="opt_7" title="remove script" name="" type="checkbox" value="cleanScript" checked="checked"/>script</label></li>
+             <li><label for="opt_8"><input id="opt_8" title="remove br" name="" type="checkbox" value="cleanBr" checked="checked"/>br</label></li>
+             <li><label for="opt_9"><input id="opt_9" title="remove html comments" name="" type="checkbox" value="cleanHtmlComment" checked="checked"/>html-comment</label></li>
+             <li><label for="opt_100"><input id="opt_100" title="remove blank line" name="" type="checkbox" value="cleanSpaceRow" checked="checked"/>blank</label></li>
          </ul>
          <div class="btn_wrap">
-              <button type="button" id="btn_replace_all" title="执行列表中的全部选项，不包含自定义标签">执行选中</button>
-              <button type="button" id="btn_dis_all" title="取消全部选中">取消全选</button>
-              <button type="button" id="btn_back" title="回退到上一步操作" disabled="disabled">后退</button>
-              <button type="button" id="btn_clear" title="清空代码区域" disabled="disabled">清空</button>
+              <button type="button" id="btn_replace_all" title="Execute all checked">Execute</button>
+              <button type="button" id="btn_dis_all" title="Cancel all checked">Cancel</button>
+              <button type="button" id="btn_back" title="Undo" disabled="disabled">Undo</button>
+              <button type="button" id="btn_clear" title="Clear" disabled="disabled">Clear</button>
          </div>
          </div>
 
          <h2 id="advanced" class="fold">Advanced Options<span class="tip">↓</span></h2>
          <div id="advanced_panel" class="advanced_panel" style="display:none;">
              <fieldset>
-                 <label for="common_attr">清除自定义属性（回车补全）</label>
-                 <input type="text" class="common_attr" id="common_attr" title="请输入属性名称，例如：tabIndex" />
+                 <label id="label_common_attr" for="common_attr">Clean Custom Attributes (ENTER)</label>
+                 <input type="text" class="common_attr" id="common_attr" title="eg: tabIndex" />
                  <span class="common_attr_tip" id="common_attr_tip" title=""></span><br />
-                 <button type="button" id="btn_clean_attr">清除属性</button>
-                 <button type="button" id="btn_clean_all_custom">仅保留常见属性</button>
+                 <button type="button" id="btn_clean_attr">Clean</button>
+                 <button type="button" id="btn_clean_all_custom">Only Keep Common Attributes</button>
              </fieldset>
              <fieldset>
-                 <label for="custom_reg">自定义正则匹配</label>
-                 <input type="text" id="custom_reg" value="" title="请输入正则表达式"/>
-                 <label for="custom_replace">替换内容</label>
+                 <label for="custom_reg">Custom RegExp</label>
+                 <input type="text" id="custom_reg" value="" title="Please input JavaScript Regular Expression"/>
+                 <label for="custom_replace">Replaced By:</label>
                  <input type="text" id="custom_replace" value="" />
-                 <button type="button" id="btn_custom" title="">执行替换</button>
+                 <button type="button" id="btn_custom" title="">Execute Replace</button>
              </fieldset>
              <fieldset>
-                 <label for="custom_txt">替换全部文本（FF,Chrome,IE9）</label>
-                 <input type="text" id="custom_txt" value="" title="请输入欲替换的文本"/>
-                 <button type="button" id="btn_custom_txt" title="">执行替换</button>
+                 <label for="custom_txt">Replace All Text (FF,Chrome,IE9)</label>
+                 <input type="text" id="custom_txt" value="" title="Place input the text"/>
+                 <button type="button" id="btn_custom_txt" title="">Execute</button>
              </fieldset>
          </div>
     </div>
+    </div>
+    <div class="ft"></div>
 </div>
 
 
 <script type="text/javascript">
-//简化选择器
+
 var $ = function(id){
     if('string' == typeof id || id instanceof String){
         return document.getElementById(id);
@@ -102,10 +104,10 @@ var $ = function(id){
     return null;
 };
 
-var codeCache = [];  //每步操作的缓存，用于后退操作
+var codeCache = [];
 
 var Clearner = {
-    clean: function(str/*被替换的字符串*/,regEx/*正则*/,replaceStr/*可选：替换字符*/){   //通用clean方法
+    clean: function(str, regEx, replaceStr){
          if(str && typeof str === 'string'){
              if(replaceStr && typeof replaceStr === 'string'){
                  str = str.replace(regEx, replaceStr);
@@ -117,7 +119,7 @@ var Clearner = {
              return '';
          }
     },
-    cleanAttr: function(str,attrName/*传入属性名称*/,replaceStr/*可选：替换字符*/){   //去掉属性和值
+    cleanAttr: function(str, attrName, replaceStr){
          if(str && typeof str === 'string' && attrName && typeof attrName === 'string'){
              var reg = new RegExp('(\\s'+attrName+'\\s*=\\s*(([\"\'][^\"\'>]*[\'\"])|(\\w*)))','ig');
 
@@ -131,48 +133,48 @@ var Clearner = {
              return '';
          }
     },
-    cleanTag: function(str,tagName){  //删除特定标签，不包括自闭和的标签
+    cleanTag: function(str,tagName){
          if(str && typeof str === 'string' && tagName && typeof tagName === 'string'){
              var reg = new RegExp('<'+ tagName +'[^>]*>(.|\\n)*?(?=<\\/'+ tagName +'>)<\\/'+ tagName +'>','ig');
              return this.clean(str,reg);
          }
     },
-    cleanClassName: function(str){  //去掉class
-        return this.cleanAttr(str,'class',' class=""');  //cleanAttr会去掉属性前面的空格，所以这里要补回来
+    cleanClassName: function(str){
+        return this.cleanAttr(str,'class',' class=""');
     },
-    cleanId: function(str){   //去掉ID
+    cleanId: function(str){
         return this.cleanAttr(str,'id');
     },
-    cleanInlineStyle: function(str){  //去掉行内样式
+    cleanInlineStyle: function(str){
         return this.cleanAttr(str,'style');
     },
-    cleanTable: function(str){  //去掉表格多余标签
+    cleanTable: function(str){
         str = this.cleanAttr(str,'valign');
         str = this.cleanAttr(str,'align');
         str = this.cleanAttr(str,'height');
         str = this.cleanAttr(str,'width');
         return str;
     },
-    cleanLink: function(str){  //去掉 a 中的 href 和 title
+    cleanLink: function(str){
         str = this.cleanAttr(str,'href',' href="#"');
         str = this.cleanAttr(str,'title',' title=""');
         return str;
     },
-    cleanImg: function(str){  //去掉 img 中的 alt，src，title
+    cleanImg: function(str){
         str = this.cleanAttr(str,'alt',' alt=""');
         str = this.cleanAttr(str,'src',' src=""');
         str = this.cleanAttr(str,'title',' title=""');
         return str;
     },
-    cleanScript: function(str){  //清除 script 标签
+    cleanScript: function(str){
         return this.cleanTag(str,'script');
     },
-    cleanText: function(str,replace/*替换文字*/){  //去掉全部文本内容，目前仅支持 FF,Chrome，IE9
+    cleanText: function(str,replace){
         var dom = document.createElement('div');
             dom.innerHTML = str;
 
             function deep(node){
-                if(node.tagName != 'SCRIPT'){   //script标签中的内容会被当成文本节点
+                if(node.tagName != 'SCRIPT'){
                     for(var i=0,j=node.childNodes.length; i<j; ++i){
                         if(node.childNodes[i] && node.childNodes[i].nodeType == 3){
                             if(node.childNodes[i].nodeValue.replace(/(^\s*)|(\s*$)/,'').length == 0) continue;
@@ -185,34 +187,31 @@ var Clearner = {
             }
             deep(dom);
 
-       /******** 不能处理属性中包含dom结构的情况
-       var newStr =  dom.innerHTML.replace(/<\/?\w+/ig,function(tag){   //修正IE7,8下标签名变为大写
+       /******** can not handle attributes which include DOM
+       var newStr =  dom.innerHTML.replace(/<\/?\w+/ig,function(tag){
               return tag.toLowerCase();
        });
-       newStr = newStr.replace(/\b\w*=\s*[^'"\s>]+/ig,function(attr){   //如果属性没有“”则为属性添加“”
+       newStr = newStr.replace(/\b\w*=\s*[^'"\s>]+/ig,function(attr){
               return attr.split('=')[0] + '="' + attr.split('=')[1] + '"';
        });
        return newStr;
        */
        return dom.innerHTML;
     },
-    cleanBr: function(str){  //清除br
+    cleanBr: function(str){
         return this.clean(str,/<br\s*\/?>\n*/ig);
     },
-    cleanSpaceRow: function(str){  //清除空行，感谢 @weiweixiao 提供正则
+    cleanSpaceRow: function(str){
         return this.clean(str,/(\r?\n(\s)*)+(?=\r?\n)/ig);
     },
-    cleanHtmlComment: function(str){  //清除html注释
+    cleanHtmlComment: function(str){
         return this.clean(str,/<!--[^-]*(.|\n)*?(?=-->)-->/ig);
     },
-    cleanAllCustomAttr: function(str){   //强过滤，只保留常见属性
+    cleanAllCustomAttr: function(str){
         var attrListReg = /\sclass|\stitle|\ssrc|\salt|\shref|\starget|\stype|\sname|\svalue|\schecked|\sdisabled|\smothod|\saction|\sfor|\srel|\sref|\scolspan|\srowspan|\scellpadding|\scellspacing/i;
 
-        //被删除的属性列表，已去重
         var deleteAttr = '';
 
-        //对所有形如 xxx='xxx'的属性进行操作，不能处理独立的属性，如：checked,disabled 等
-        //属性中可能同时包含单双引号 如 onclick = "alert('haha');";
         str = str.replace(/(\s\w+(\-)?\w+\s*=\s*'[^'>]*')|(\s\w+(\-)?\w+\s*=\s*"[^">]*")|(\s\\w+(\-)?\w+\s*=\s*\w*)/ig,function(attr){
               if(attrListReg.test(attr.split('=')[0])){
                   return attr.split('=')[0]=='href' ? attr.split('=')[0] + '="#"': attr.split('=')[0] + '=""';
@@ -227,7 +226,6 @@ var Clearner = {
     }
 };
 
-//保存操作记录
 var saveRecord = function(){
      if($('code').value != codeCache[codeCache.length-1]){
          codeCache.push($('code').value);
@@ -235,7 +233,6 @@ var saveRecord = function(){
      }
 };
 
-//展开收起
 var toggleFold = function(trigger,contentId){
     if(trigger && contentId && $(contentId).style){
         if($(contentId).style.display == 'none'){
@@ -250,26 +247,22 @@ var toggleFold = function(trigger,contentId){
     }
 };
 
-//初始化函数
 var init = function(){
-    //高级选项面板
+
     $('advanced').onclick = function(){
        toggleFold(this,'advanced_panel');
     };
 
-    //代码区域检测 TODO: 增加更高级的校验
     $('code').onkeyup = function(){
           $('btn_clear').disabled = !(this.value!='');
     };
 
-    //清空代码区域
     $('btn_clear').onclick = function(){
          saveRecord();
          $('code').value = '';
          this.disabled = true;
     };
 
-    //常见属性清除
     $('btn_clean_attr').onclick = function(){
         if($('code').value == ''){
             alert('请添加要清理的代码');
@@ -285,7 +278,6 @@ var init = function(){
         }
     };
 
-    //清除全部自定义属性
     $('btn_clean_all_custom').onclick = function(){
         if($('code').value == ''){
             alert('请添加要清理的代码');
@@ -301,7 +293,6 @@ var init = function(){
         }
     };
 
-    //自定义匹配
     $('btn_custom').onclick = function(){
         if($('code').value == ''){
             alert('请添加要清理的代码');
@@ -316,7 +307,6 @@ var init = function(){
         }
     };
 
-    //代码自动补全
     $('common_attr').onkeyup = function(event){
         var evt = event || window.event;
         if($('code').value!=''&& evt.keyCode!= '8'){
@@ -333,7 +323,6 @@ var init = function(){
         }
     };
 
-    //执行选中
     $('btn_replace_all').onclick = function(){
         if($('code').value == ''){
             alert('请添加要清理的代码');
@@ -351,7 +340,6 @@ var init = function(){
         $('code').value = cache;
     };
 
-    //全部选中与取消全选
     var isSelectAll = true;
     $('btn_dis_all').onclick = function(){
          var optList = $('opt').getElementsByTagName('li');
@@ -370,13 +358,11 @@ var init = function(){
          isSelectAll = !isSelectAll;
     };
 
-    //替换全部文本
     $('btn_custom_txt').onclick = function(){
         saveRecord();
         $('code').value = Clearner.cleanText($('code').value,$('custom_txt').value);
     };
 
-    //撤销操作
     $('btn_back').onclick = function(){
         if(codeCache.length>1 && typeof codeCache[codeCache.length-1] !== 'undefined'){
            $('code').value = codeCache.pop();
