@@ -164,14 +164,9 @@ var init = function(){
         toggleFold(this,'advanced_panel');
     };
 
-    $('code').onkeyup = function(){
-        $('btn_clear').disabled = !(this.value!='');
-    };
-
-    $('btn_clear').onclick = function(){
+    $('btn_format').onclick = function(){
         saveRecord();
-        $('code').value = '';
-        this.disabled = true;
+        $('code').value = style_html($('code').value);
     };
 
     $('btn_clean_attr').onclick = function(){
