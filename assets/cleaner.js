@@ -178,7 +178,7 @@ var init = function(){
 
         if(tag!=''){
             saveRecord();
-            $('code').value = Clearner.cleanAttr($('code').value,tag);
+            $('code').value = style_html(Clearner.cleanAttr($('code').value,tag));
         }else{
             alert('Please input the name of the attribute.');
         }
@@ -192,7 +192,7 @@ var init = function(){
         saveRecord();
         var ret = Clearner.cleanAllCustomAttr($('code').value);
         if(ret && ret.deleteAttr!=''){
-            $('code').value = ret.str;
+            $('code').value = style_html(ret.str);
             alert('Already removed：'+ ret.deleteAttr);
         }else{
             alert('Codes had none custom attributes.');
@@ -209,7 +209,7 @@ var init = function(){
         }else{
             var reg = new RegExp($('custom_reg').value,"ig");
             saveRecord();
-            $('code').value = Clearner.clean($('code').value,reg,$('custom_replace').value);
+            $('code').value = style_html(Clearner.clean($('code').value,reg,$('custom_replace').value));
         }
     };
 
@@ -243,7 +243,7 @@ var init = function(){
                 cache = Clearner[optList[i].getElementsByTagName('input')[0].value](cache);
             }
         }
-        $('code').value = cache;
+        $('code').value = style_html(cache);
     };
 
     var isSelectAll = true;
@@ -266,7 +266,7 @@ var init = function(){
 
     $('btn_custom_txt').onclick = function(){
         saveRecord();
-        $('code').value = Clearner.cleanText($('code').value,$('custom_txt').value);
+        $('code').value = style_html(Clearner.cleanText($('code').value,$('custom_txt').value));
     };
 
     $('btn_back').onclick = function(){

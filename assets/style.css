@@ -19,6 +19,6 @@ html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10
 .toolbar .advanced_panel input{width:190px;margin-bottom:5px;padding:2px;}
 .toolbar button{cursor:pointer;padding:2px;}
 .toolbar input.common_attr{width:100px;}
-.toolbar .common_attr_tip{color:#c00;font-weight:bold;padding-left:10px;}
+.toolbar .common_attr_tip{display: inline-block;width:110px;height: 18px; overflow: hidden;text-overflow: ellipsis; color:#c00;font-weight:bold;padding-left:10px;vertical-align: middle;white-space: nowrap;}
 .footer{padding:20px;background-color: #e7e7e7;border-top:1px solid #ddd;font:12px/1.5em arial;}
 .footer a{text-decoration: none;color:#369;}
