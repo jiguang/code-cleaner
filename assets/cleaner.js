@@ -6,15 +6,6 @@
  @date 20110728
  */
 
-var $ = function(id){
-    if('string' == typeof id || id instanceof String){
-        return document.getElementById(id);
-    }else if(id && id.nodeName && (id.nodeType == 1 || id.nodeType == 9)) {
-        return id;
-    }
-    return null;
-};
-
 var codeCache = [];
 
 var Clearner = {
@@ -138,151 +129,155 @@ var Clearner = {
 };
 
 var saveRecord = function(){
-    if($('code').value != codeCache[codeCache.length-1]){
-        codeCache.push($('code').value);
-        $('btn_back').disabled = false;
-    }
-};
-
-var toggleFold = function(trigger,contentId){
-    if(trigger && contentId && $(contentId).style){
-        if($(contentId).style.display == 'none'){
-            $(contentId).style.display = 'block';
-            trigger.className = 'unfold';
-            trigger.getElementsByTagName('span')[0].innerHTML = '↑';
-        }else if($(contentId).style.display = 'block'){
-            $(contentId).style.display = 'none';
-            trigger.className = 'fold';
-            trigger.getElementsByTagName('span')[0].innerHTML = '↓';
-        }
+    if($('#code').val() != codeCache[codeCache.length-1]){
+        codeCache.push($('#code').val());
+        $('#btn_back').removeAttr('disabled');
     }
 };
 
 var init = function(){
+    /* Code Mirror */
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+        mode: "text/html", tabMode: "indent",
+        lineNumbers: true
+    });
 
-    $('advanced').onclick = function(){
-        toggleFold(this,'advanced_panel');
-    };
+    $('#advanced').click(function(){
+        $('#advanced_panel').toggle();
+    });
 
-    $('btn_format').onclick = function(){
+    $('#btn_format').click(function(){
         saveRecord();
-        $('code').value = style_html($('code').value);
-    };
 
-    $('btn_clean_attr').onclick = function(){
-        if($('code').value == ''){
+        $('#code').val(style_html($('#code').val()));
+        editor.setValue(style_html($('#code').val()));
+    });
+
+    $('#btn_clean_attr').click(function(){
+        if($('code').val() == ''){
             alert('Please input the code to be cleaned.');
             return;
         }
-        var tag = $('common_attr').value;
+        var tag = $('#common_attr').val();
 
         if(tag!=''){
             saveRecord();
-            $('code').value = style_html(Clearner.cleanAttr($('code').value,tag));
+            $('#code').val(style_html(Clearner.cleanAttr($('#code').val(),tag)));
+            editor.setValue(style_html(Clearner.cleanAttr($('#code').val(),tag)));
         }else{
             alert('Please input the name of the attribute.');
         }
-    };
+    });
 
-    $('btn_clean_all_custom').onclick = function(){
-        if($('code').value == ''){
+    $('#btn_clean_all_custom').click(function(){
+        if($('#code').val() == ''){
             alert('Please input the code to be cleaned.');
             return;
         }
         saveRecord();
-        var ret = Clearner.cleanAllCustomAttr($('code').value);
+        var ret = Clearner.cleanAllCustomAttr($('#code').val());
         if(ret && ret.deleteAttr!=''){
-            $('code').value = style_html(ret.str);
+            $('#code').val(style_html(ret.str));
+            editor.setValue(style_html(ret.str));
+
             alert('Already removed：'+ ret.deleteAttr);
         }else{
             alert('Codes had none custom attributes.');
         }
-    };
+    });
 
-    $('btn_custom').onclick = function(){
-        if($('code').value == ''){
+    $('#btn_custom').click(function(){
+        if($('#code').val() == ''){
             alert('Please input the code to be cleaned.');
             return;
         }
-        if($('custom_reg').value == ''){
+        if($('#custom_reg').val() == ''){
             alert('Please input JavaScript Regular Expression.');
         }else{
-            var reg = new RegExp($('custom_reg').value,"ig");
+            var reg = new RegExp($('#custom_reg').val(),"ig");
             saveRecord();
-            $('code').value = style_html(Clearner.clean($('code').value,reg,$('custom_replace').value));
-        }
-    };
+            $('#code').val(style_html(Clearner.clean($('#code').val(),reg,$('#custom_replace').val())));
+            editor.setValue(style_html(Clearner.clean($('#code').val(),reg,$('#custom_replace').val())));
+}
+    });
 
-    $('common_attr').onkeyup = function(event){
-        var evt = event || window.event;
-        if($('code').value!=''&& evt.keyCode!= '8'){
+    $('#common_attr').keyup(function(event){
+
+        if($('#code').val() != '' && event.keyCode!= '8'){
             var reg = new RegExp('\\b'+this.value + '\\S*\\s*(?=\\=)','ig');
-            var match = $('code').value.match(reg);
+            var match = $('#code').val().match(reg);
 
             if(match){
-                $('common_attr_tip').innerHTML = match[0];
+                $('#common_attr_tip').html(match[0]);
             }
 
-            if(evt.keyCode == '13'){
-                var tag = $('common_attr').value = $('common_attr_tip').innerHTML;
+            if(event.keyCode == '13'){
+                var tag = $('#common_attr').val($('#common_attr_tip').html());
             }
         }
-    };
+    });
 
-    $('btn_replace_all').onclick = function(){
-        if($('code').value == ''){
+    $('#btn_replace_all').click(function(){
+        if($('#code').val() == ''){
             alert('Please input the code to be cleaned.');
             return;
         }
-        var optList = $('opt').getElementsByTagName('li');
+        var optList = $('#opt li');
         saveRecord();
 
-        var cache = $('code').value;
-        for(var i=0,j=optList.length; i<j; ++i){
-            if(optList[i].getElementsByTagName('input')[0].checked){
-                cache = Clearner[optList[i].getElementsByTagName('input')[0].value](cache);
-            }
-        }
-        $('code').value = style_html(cache);
-    };
+        var cache = $('#code').val();
+        $('#opt input:checked').each(function(){
+            cache = Clearner[$(this).val()](cache);
+        });
+
+        $('#code').val(style_html(cache));
+        editor.setValue(style_html(cache));
+    });
 
     var isSelectAll = true;
-    $('btn_dis_all').onclick = function(){
-        var optList = $('opt').getElementsByTagName('li');
+    $('#btn_dis_all').click(function(){
 
         if(isSelectAll){
-            for(var i=0,j=optList.length; i<j; ++i){
-                optList[i].getElementsByTagName('input')[0].checked = false;
-            }
-            this.innerHTML = 'Check All';
+            $('#opt input:checked').each(function(){
+                $(this).removeAttr('checked');
+            });
+            $(this).html('Check All');
         }else{
-            for(var k=0,m=optList.length; k<m; ++k){
-                optList[k].getElementsByTagName('input')[0].checked = true;
-            }
-            this.innerHTML = 'Cancel All';
+            $('#opt input').each(function(){
+                $(this).attr('checked', 'checked');
+            });
+            $(this).html('Cancel All');
         }
         isSelectAll = !isSelectAll;
-    };
+    });
 
-    $('btn_custom_txt').onclick = function(){
+    $('#btn_custom_txt').click(function(){
         saveRecord();
-        $('code').value = style_html(Clearner.cleanText($('code').value,$('custom_txt').value));
-    };
+        $('#code').val(style_html(Clearner.cleanText($('#code').val(),$('#custom_txt').val())));
+        editor.setValue(style_html(Clearner.cleanText($('#code').val(),$('#custom_txt').val())));
+    });
 
-    $('btn_back').onclick = function(){
-        if(codeCache.length>1 && typeof codeCache[codeCache.length-1] !== 'undefined'){
-            $('code').value = codeCache.pop();
-        }else if(codeCache.length == 1){
-            $('code').value = codeCache.pop();
-            $('btn_back').disabled = true;
+    $('#btn_back').click(function(){
+        if(codeCache.length === 0 || typeof codeCache[codeCache.length-1] === 'undefined'){
+            return;
         }
 
-        if($('btn_clear').disabled && $('code').value != ''){
-            $('btn_clear').disabled = false;
+        if(codeCache.length == 1){
+            $('#btn_back').attr('disabled', 'disabled');
         }
-    };
+
+        $('#code').val(codeCache.pop());
+        editor.setValue($('#code').val());
+    });
+
+    $('.CodeMirror').keyup(function(){
+        $('#code').val(editor.getValue());
+    });
+
 };
 
-window.onload = function(){
+
+$(function(){
     init();
-};
+});
+

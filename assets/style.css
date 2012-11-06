@@ -1,24 +1,26 @@
-/*! normalize.css v1.0.1 | MIT License | git.io/normalize */
-html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } html, button, input, select, textarea { font-family: sans-serif; } body { margin: 0; } a:focus { outline: thin dotted; } a:active, a:hover { outline: 0; } h1 { font-size: 2em; margin: 0.67em 0; } h2 { font-size: 1.5em; margin: 0.83em 0; } h3 { font-size: 1.17em; margin: 1em 0; } h4 { font-size: 1em; margin: 1.33em 0; } h5 { font-size: 0.83em; margin: 1.67em 0; } h6 { font-size: 0.75em; margin: 2.33em 0; } dl, menu, ol, ul { list-style: none; margin: 0;padding:0; } img { border: 0; -ms-interpolation-mode: bicubic; } form { margin: 0; } fieldset { border: 0 none; margin: 0 2px; padding: 5px 0; } legend { border: 0;padding: 0; white-space: normal;  *margin-left: -7px; } button, input, select, textarea { font-size: 100%;  margin: 0; vertical-align: baseline;*vertical-align: middle; } button, input { line-height: normal; } button, html input[type="button"],input[type="reset"], input[type="submit"] { -webkit-appearance: button;  cursor: pointer;*overflow: visible;} button[disabled], input[disabled] { cursor: default; } input[type="checkbox"], input[type="radio"] { box-sizing: border-box;padding: 0; *height: 13px; *width: 13px;} button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; } textarea { overflow: auto; vertical-align: top; }
-
-.header{padding:0 20px;border:1px solid #ddd;margin-bottom:10px;background-color: #000;color:#e7e7e7;}
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } html, button, input, select, textarea { font-family: sans-serif; } body { margin: 0; padding:0;} a:focus { outline: thin dotted; } a:active, a:hover { outline: 0; } h1 { font-size: 2em; margin: 0.67em 0; } h2 { font-size: 1.5em; margin: 0.83em 0; } h3 { font-size: 1.17em; margin: 1em 0; } h4 { font-size: 1em; margin: 1.33em 0; } h5 { font-size: 0.83em; margin: 1.67em 0; } h6 { font-size: 0.75em; margin: 2.33em 0; } dl, menu, ol, ul { list-style: none; margin: 0;padding:0; } img { border: 0; -ms-interpolation-mode: bicubic; } form { margin: 0; } fieldset { border: 0 none; margin: 0 2px; padding: 5px 0; } legend { border: 0;padding: 0; white-space: normal;  *margin-left: -7px; } button, input, select, textarea { font-size: 100%;  margin: 0; vertical-align: baseline;*vertical-align: middle; } button, input { line-height: normal; } button, html input[type="button"],input[type="reset"], input[type="submit"] { -webkit-appearance: button;  cursor: pointer;*overflow: visible;} button[disabled], input[disabled] { cursor: default; } input[type="checkbox"], input[type="radio"] { box-sizing: border-box;padding: 0; *height: 13px; *width: 13px;} button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; } textarea { overflow: auto; vertical-align: top; }
+.code-cleaner{background-color:#f7f7f7;}
+.code-cleaner h1, .code-cleaner h2{letter-spacing:normal;border-color:#ddd; -webkit-transition:border-color 0.5s linear; -moz-transition:border-color 0.5s linear; -o-transition:border-color 0.5s linear; transition:border-color 0.5s linear; }
+.code-cleaner h2:hover{border-color:#999;}
+.header, .main, .footer{width:100%;}
+.header .inner, .main, .footer .inner{width:960px;margin:0 auto;}
+.header{border:1px solid #ddd;background-color: #000;color:#e7e7e7;}
 .header h1{font:normal 18px/1.5em "Microsoft Yahei";}
-.wrapper{width:960px;overflow:hidden;padding:10px 20px;font:12px/1.5em "Microsoft Yahei";color:#333;}
-.main{float:left;width:680px;}
-.code{width:670px;height:500px;padding:5px; resize:none;font-family:"courier new" sans-serif;font-size:12px;background-color: #333;color:#e7e7e7;border:2px solid #000;}
+.main{width:960px;overflow:hidden;padding:20px;font:12px/1.5em "Microsoft Yahei";color:#333;}
+.content{float:left;width:680px;}
+.CodeMirror-scroll{width:670px;height:500px;border:1px solid #ddd;background-color:#fff;}
 .toolbar{float:right;width:264px;}
 .toolbar .opt{overflow:hidden;}
 .toolbar .opt li{float:left;cursor:pointer;line-height:2em;margin-bottom:5px;color:#333;padding-right:10px;}
-.toolbar .opt_panel{padding:10px;border:1px solid #ddd;}
+.toolbar .opt_panel{padding:10px;border:1px solid #ddd;background-color:#fff;}
 .toolbar .opt li input{vertical-align:-2px;margin-right:10px;}
 .toolbar .opt li label{cursor:pointer;white-space:nowrap;}
-.toolbar .fold,.toolbar .unfold{font-size:14px;font-weight:normal; border:1px solid #ddd;  color:#666;height:26px; line-height:26px;padding-left:10px;cursor:pointer; }
-.toolbar h2 .tip{padding-left:110px;font-size:12px;}
-.toolbar .advanced_panel{padding:10px;position:relative;border:1px solid #ddd;margin-top:5px;}
+.toolbar .fold,.toolbar .unfold{font-size:14px;font-weight:normal; border:1px solid #ddd;  color:#666;height:26px; line-height:26px;padding-left:10px;cursor:pointer; background-color:#fff;}
+.toolbar .advanced_panel{padding:10px;position:relative;border:1px solid #ddd;margin-top:5px;background-color:#fff;}
 .toolbar .advanced_panel label{display:block;}
 .toolbar .advanced_panel input{width:190px;margin-bottom:5px;padding:2px;}
 .toolbar button{cursor:pointer;padding:2px;}
 .toolbar input.common_attr{width:100px;}
 .toolbar .common_attr_tip{display: inline-block;width:110px;height: 18px; overflow: hidden;text-overflow: ellipsis; color:#c00;font-weight:bold;padding-left:10px;vertical-align: middle;white-space: nowrap;}
-.footer{padding:20px;background-color: #e7e7e7;border-top:1px solid #ddd;font:12px/1.5em arial;}
+.footer{padding:20px 0;background-color: #e7e7e7;border-top:1px solid #ddd;font:12px/1.5em arial;}
 .footer a{text-decoration: none;color:#369;}

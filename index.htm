@@ -2,16 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Code Cleaner V0.1 - An HTML Code Cleaner, Remove Anything You Want.</title>
+    <title>Code Cleaner V1.0 - An HTML Code Cleaner, Remove Anything You Want.</title>
+
+    <!-- jQuery -->
+    <script src="assets/jquery-1.8.2.min.js"></script>
+
+    <!-- Code Mirror -->
+    <link rel="stylesheet" href="assets/codemirror.css">
+    <script src="assets/codemirror.js"></script>
+    <script src="assets/xml.js"></script>
+    <script src="assets/javascript.js"></script>
+    <script src="assets/css.js"></script>
+    <script src="assets/htmlmixed.js"></script>
+
+    <!-- Custom -->
     <link rel="stylesheet" href="assets/style.css">
     <script type="text/javascript" src="assets/beautify-html.js"></script>
     <script type="text/javascript" src="assets/cleaner.js"></script>
+
 </head>
 <body>
-<div class="header"><h1>Code Cleaner - An HTML Code Cleaner Which Can Remove Anything You Want.</h1></div>
-<div class="wrapper">
-    <div class="main">
-         <textarea id="code" class="code"></textarea>
+<div class="code-cleaner">
+<div class="header">
+    <div class="inner">
+        <h1>Code Cleaner - An HTML Code Cleaner Which Can Remove Anything You Want.</h1>
+    </div>
+</div>
+<div class="main">
+    <div class="content">
+         <textarea id="code" name="code" class="code"></textarea>
     </div>
     <div class="toolbar">
          <div id="opt_panel" class="opt_panel" >
@@ -35,32 +54,35 @@
          </div>
          </div>
 
-         <h2 id="advanced" class="fold">Advanced Options<span class="tip">↓</span></h2>
+         <h2 id="advanced" class="fold">Advanced Options</h2>
          <div id="advanced_panel" class="advanced_panel" style="display:none;">
              <fieldset>
                  <label id="label_common_attr" for="common_attr">Clean Custom Attributes (ENTER)</label>
-                 <input type="text" class="common_attr" id="common_attr" title="eg: tabIndex" />
+                 <input type="text" class="common_attr" id="common_attr" title="eg: tabIndex" placeholder="eg: tabIndex"/>
                  <span class="common_attr_tip" id="common_attr_tip" title=""></span><br />
                  <button type="button" id="btn_clean_attr">Clean</button>
                  <button type="button" id="btn_clean_all_custom">Only Keep Common Attributes</button>
              </fieldset>
              <fieldset>
                  <label for="custom_reg">Custom RegExp</label>
-                 <input type="text" id="custom_reg" value="" title="Please input JavaScript Regular Expression"/>
+                 <input type="text" id="custom_reg" value="" title="Please input JavaScript Regular Expression" placeholder="eg: \d{3,5}"/>
                  <label for="custom_replace">Replaced By:</label>
-                 <input type="text" id="custom_replace" value="" />
+                 <input type="text" id="custom_replace" value="" placeholder="new content"/>
                  <button type="button" id="btn_custom" title="">Execute Replace</button>
              </fieldset>
              <fieldset>
                  <label for="custom_txt">Replace All Text (FF,Chrome,IE9)</label>
-                 <input type="text" id="custom_txt" value="" title="Place input the text"/>
+                 <input type="text" id="custom_txt" value="" title="Place input the text" placeholder="your text"/>
                  <button type="button" id="btn_custom_txt" title="">Execute</button>
              </fieldset>
          </div>
     </div>
 </div>
 <div class="footer">
-    Code Cleaner V0.1 by <a href="http://44ux.com" title="Author" target="_blank">JiGuang</a> you can <a href="https://github.com/jiguang/code-cleaner" title="Fork me on Github!" target="_blank">Fork me on Github!</a>
+    <div class="inner">
+    Code Cleaner V1.0 by <a href="http://44ux.com" title="Author" target="_blank">JiGuang</a> you can <a href="https://github.com/jiguang/code-cleaner" title="Fork me on Github!" target="_blank">Fork me on Github!</a>
+    </div>
+</div>
 </div>
 <script type="text/javascript">
 
