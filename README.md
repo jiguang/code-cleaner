@@ -25,3 +25,5 @@ Code Cleaner 可以帮助Web开发人员快速获取简洁的DOM结构，当某�
 
 项目主页：http://44ux.com/blog/2012/04/27/code-cleaner-chrome-extention/
 
+在线版地址：http://44ux.com/demo/code-cleaner/index.htm
+
