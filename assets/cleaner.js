@@ -1,12 +1,13 @@
-/*
- @title Code Cleaner V0.1
+/**
+ @title Code Cleaner V1.0
  @author jiguang
  @mail jiguang1984#gmail.com
  @site http://44ux.com
- @date 20110728
+ @date 20121107
  */
 
-var codeCache = [];
+var codeCache = [],
+    editor;
 
 var Clearner = {
     clean: function(str, regEx, replaceStr){
@@ -135,9 +136,15 @@ var saveRecord = function(){
     }
 };
 
+var setCode = function(code){
+    saveRecord();
+    $('#code').val(style_html(code));
+    editor.setValue(style_html(code));
+};
+
 var init = function(){
-    /* Code Mirror */
-    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+
+    editor = CodeMirror.fromTextArea($('#code')[0], {
         mode: "text/html", tabMode: "indent",
         lineNumbers: true
     });
@@ -147,23 +154,18 @@ var init = function(){
     });
 
     $('#btn_format').click(function(){
-        saveRecord();
-
-        $('#code').val(style_html($('#code').val()));
-        editor.setValue(style_html($('#code').val()));
+        setCode($('#code').val());
     });
 
     $('#btn_clean_attr').click(function(){
-        if($('code').val() == ''){
+        if($('#code').val() == ''){
             alert('Please input the code to be cleaned.');
             return;
         }
         var tag = $('#common_attr').val();
 
         if(tag!=''){
-            saveRecord();
-            $('#code').val(style_html(Clearner.cleanAttr($('#code').val(),tag)));
-            editor.setValue(style_html(Clearner.cleanAttr($('#code').val(),tag)));
+            setCode(Clearner.cleanAttr($('#code').val(),tag));
         }else{
             alert('Please input the name of the attribute.');
         }
@@ -174,11 +176,9 @@ var init = function(){
             alert('Please input the code to be cleaned.');
             return;
         }
-        saveRecord();
         var ret = Clearner.cleanAllCustomAttr($('#code').val());
         if(ret && ret.deleteAttr!=''){
-            $('#code').val(style_html(ret.str));
-            editor.setValue(style_html(ret.str));
+            setCode(ret.str);
 
             alert('Already removed：'+ ret.deleteAttr);
         }else{
@@ -195,10 +195,8 @@ var init = function(){
             alert('Please input JavaScript Regular Expression.');
         }else{
             var reg = new RegExp($('#custom_reg').val(),"ig");
-            saveRecord();
-            $('#code').val(style_html(Clearner.clean($('#code').val(),reg,$('#custom_replace').val())));
-            editor.setValue(style_html(Clearner.clean($('#code').val(),reg,$('#custom_replace').val())));
-}
+            setCode(Clearner.clean($('#code').val(), reg, $('#custom_replace').val()));
+        }
     });
 
     $('#common_attr').keyup(function(event){
@@ -222,16 +220,13 @@ var init = function(){
             alert('Please input the code to be cleaned.');
             return;
         }
-        var optList = $('#opt li');
-        saveRecord();
 
         var cache = $('#code').val();
         $('#opt input:checked').each(function(){
             cache = Clearner[$(this).val()](cache);
         });
 
-        $('#code').val(style_html(cache));
-        editor.setValue(style_html(cache));
+        setCode(cache);
     });
 
     var isSelectAll = true;
@@ -252,9 +247,7 @@ var init = function(){
     });
 
     $('#btn_custom_txt').click(function(){
-        saveRecord();
-        $('#code').val(style_html(Clearner.cleanText($('#code').val(),$('#custom_txt').val())));
-        editor.setValue(style_html(Clearner.cleanText($('#code').val(),$('#custom_txt').val())));
+        setCode(Clearner.cleanText($('#code').val(),$('#custom_txt').val()));
     });
 
     $('#btn_back').click(function(){
@@ -266,8 +259,7 @@ var init = function(){
             $('#btn_back').attr('disabled', 'disabled');
         }
 
-        $('#code').val(codeCache.pop());
-        editor.setValue($('#code').val());
+        setCode(codeCache.pop());
     });
 
     $('.CodeMirror').keyup(function(){
@@ -275,7 +267,6 @@ var init = function(){
     });
 
 };
-
 
 $(function(){
     init();
