@@ -10,6 +10,20 @@ var codeCache = [],
     editor;
 
 var Clearner = {
+
+    formatSelection: function(all){
+        if(all){
+            CodeMirror.commands["selectAll"](editor);
+        }
+
+        var range = {
+            from: editor.getCursor(true),
+            to: editor.getCursor(false)
+        };
+        editor.autoFormatRange(range.from, range.to);
+        return editor.getValue();
+    },
+
     clean: function(str, regEx, replaceStr){
         if(str && typeof str === 'string'){
             if(replaceStr && typeof replaceStr === 'string'){
@@ -129,17 +143,17 @@ var Clearner = {
     }
 };
 
-var saveRecord = function(){
-    if($('#code').val() != codeCache[codeCache.length-1]){
+var setCode = function(code, noSave){
+
+    noSave = noSave || false;
+
+    if( !noSave && $('#code').val() != codeCache[codeCache.length-1]){
         codeCache.push($('#code').val());
         $('#btn_back').removeAttr('disabled');
     }
-};
 
-var setCode = function(code){
-    saveRecord();
-    $('#code').val(style_html(code));
-    editor.setValue(style_html(code));
+    $('#code').val(code);
+    editor.setValue(code);
 };
 
 var init = function(){
@@ -154,7 +168,11 @@ var init = function(){
     });
 
     $('#btn_format').click(function(){
-        setCode($('#code').val());
+        setCode(Clearner.formatSelection(true));
+    });
+
+    $('#btn_format_selection').click(function(){
+        setCode(Clearner.formatSelection());
     });
 
     $('#btn_clean_attr').click(function(){
@@ -251,7 +269,8 @@ var init = function(){
     });
 
     $('#btn_back').click(function(){
-        if(codeCache.length === 0 || typeof codeCache[codeCache.length-1] === 'undefined'){
+
+        if(codeCache.length == 0 || typeof codeCache[codeCache.length-1] === 'undefined'){
             return;
         }
 
@@ -259,7 +278,7 @@ var init = function(){
             $('#btn_back').attr('disabled', 'disabled');
         }
 
-        setCode(codeCache.pop());
+        setCode(codeCache.pop(), true);
     });
 
     $('.CodeMirror').keyup(function(){
