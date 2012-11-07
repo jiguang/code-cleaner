@@ -200,7 +200,7 @@ var init = function(){
 
             alert('Already removed：'+ ret.deleteAttr);
         }else{
-            alert('Codes had none custom attributes.');
+            alert('Code has no custom attributes.');
         }
     });
 
