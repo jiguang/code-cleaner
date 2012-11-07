@@ -149,7 +149,7 @@ var setCode = function(code, noSave){
 
     if( !noSave && $('#code').val() != codeCache[codeCache.length-1]){
         codeCache.push($('#code').val());
-        $('#btn_back').removeAttr('disabled');
+        $('#btn_back').removeAttr('disabled').html('Undo('+codeCache.length+')');
     }
 
     $('#code').val(code);
@@ -279,6 +279,7 @@ var init = function(){
         }
 
         setCode(codeCache.pop(), true);
+        $('#btn_back').html('Undo('+codeCache.length+')');
     });
 
     $('.CodeMirror').keyup(function(){
