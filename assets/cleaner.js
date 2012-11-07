@@ -3,7 +3,7 @@
  @author jiguang
  @mail jiguang1984#gmail.com
  @site http://44ux.com
- @date 20121107
+ @date 2012-11-07
  */
 
 var codeCache = [],
@@ -210,7 +210,7 @@ var init = function(){
             }
 
             if(event.keyCode == '13'){
-                var tag = $('#common_attr').val($('#common_attr_tip').html());
+                $('#common_attr').val($('#common_attr_tip').html());
             }
         }
     });
