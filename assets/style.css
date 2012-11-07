@@ -7,7 +7,7 @@ html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10
 .header{border:1px solid #ddd;background-color: #000;color:#e7e7e7;}
 .header h1{font:normal 18px/1.5em "Microsoft Yahei";}
 .main{width:960px;overflow:hidden;padding:20px;font:12px/1.5em "Microsoft Yahei";color:#333;}
-.content{float:left;width:680px;}
+.content{float:left;width:672px;}
 .CodeMirror-scroll{width:670px;height:520px;border:1px solid #ddd;background-color:#fff;}
 .toolbar{float:right;width:264px;}
 .toolbar .opt{overflow:hidden;}
