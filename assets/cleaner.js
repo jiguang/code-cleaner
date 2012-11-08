@@ -33,7 +33,8 @@ var init = function(){
     var clip = new ZeroClipboard.Client();
     clip.setHandCursor(true);
 
-    clip.setText(editor.getValue());
+    var copy_content = editor.getValue();
+    clip.setText(copy_content);
     clip.glue('btn_copy');
 
     clip.addEventListener( 'complete', function(){
