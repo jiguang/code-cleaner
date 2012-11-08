@@ -1,7 +1,7 @@
 Code Cleaner V1.0
 ============
 
-访问地址：http://44ux.com/demo/code-cleaner/index.htm
+访问地址：http://44ux.com/code-cleaner/
 
 HTML 代码清理工具，可以快速清除多余标签以及其他冗余信息，使代码结构可复用。V1.0 版已实现功能：
 

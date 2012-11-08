@@ -33,13 +33,15 @@ var init = function(){
     var clip = new ZeroClipboard.Client();
     clip.setHandCursor(true);
 
-    var copy_content = editor.getValue();
-    clip.setText(copy_content);
-    clip.glue('btn_copy');
+    clip.addEventListener('mouseDown', function(client) {
+        // set text to copy here
+        clip.setText(editor.getValue());
+    } );
 
-    clip.addEventListener( 'complete', function(){
+    clip.addEventListener('complete', function(){
         showTip('Copy Success!')
     } );
+    clip.glue('btn_copy');
 
     // edit options
     $('#advanced').click(function(){ $('#advanced_panel').toggle(); });
@@ -177,7 +179,7 @@ var Clearner = {
     },
     cleanTag: function(str,tagName){
         if(str && typeof str === 'string' && tagName && typeof tagName === 'string'){
-            var reg = new RegExp('<'+ tagName +'[^>]*>(.|\\n)*?(?=<\\/'+ tagName +'>)<\\/'+ tagName +'>','ig');
+            var reg = new RegExp('<'+ tagName +'[^>]*>(.|\\n)*?(?=<\\/'+ tagName +'>)<\\/'+ tagName +'>\\n?','ig');
             return this.clean(str,reg);
         }
     },
