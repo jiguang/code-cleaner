@@ -6,23 +6,147 @@
  @date 2012-11-07
  */
 
-var codeCache = [],
-    editor;
+// the editor
+var editor;
 
-var Clearner = {
+// set code with options
+var setCode = function(html_source){
+    editor.setValue(style_html(html_source, {
+            indent_size: 2,
+            max_char: 0
+    }));
+};
 
-    formatSelection: function(all){
-        if(all){
-            CodeMirror.commands["selectAll"](editor);
+// shop tip
+var showTip = function(text){
+    $('#tip').html(text).show().delay(4000).slideUp(300);
+};
+
+var init = function(){
+    editor = CodeMirror.fromTextArea($('#code')[0], {
+        mode: "text/html", tabMode: "indent",
+        lineNumbers: true
+    });
+
+    // zeroclipboard
+    ZeroClipboard.setMoviePath( 'assets/ZeroClipboard.swf' );
+    var clip = new ZeroClipboard.Client();
+    clip.setHandCursor(true);
+
+    clip.setText(editor.getValue());
+    clip.glue('btn_copy');
+
+    clip.addEventListener( 'complete', function(){
+        showTip('Copy Success!')
+    } );
+
+    // edit options
+    $('#advanced').click(function(){ $('#advanced_panel').toggle(); });
+    $('#btn_undo').click(function(){ editor.undo(); });
+    $('#btn_clear').click(function(){ setCode(''); });
+
+    // clean attribute(s)
+    $('#btn_clean_attr').click(function(){
+        if(editor.getValue() === ''){
+            showTip('Please input the code to be cleaned.');
+            return;
+        }
+        var tag = $('#common_attr').val();
+
+        if(tag!=''){
+            setCode(Clearner.cleanAttr(editor.getValue(),tag));
+        }else{
+            showTip('Please input the name of the attribute.');
+        }
+    });
+
+    // clean custom attribute(s)
+    $('#btn_clean_all_custom').click(function(){
+        if(editor.getValue() === ''){
+            showTip('Please input the code to be cleaned.');
+            return;
+        }
+        var ret = Clearner.cleanAllCustomAttr(editor.getValue());
+        if(ret && ret.deleteAttr!=''){
+            setCode(ret.str);
+
+            showTip('Already removed：'+ ret.deleteAttr);
+        }else{
+            showTip('Code has no custom attributes.');
+        }
+    });
+
+    // clean by custom reg
+    $('#btn_custom').click(function(){
+        if(editor.getValue() === ''){
+            showTip('Please input the code to be cleaned.');
+            return;
+        }
+        if($('#custom_reg').val() === ''){
+            showTip('Please input JavaScript Regular Expression.');
+        }else{
+            var reg = new RegExp($('#custom_reg').val(),"ig");
+            setCode(Clearner.clean(editor.getValue(), reg, $('#custom_replace').val()));
+        }
+    });
+
+    // only keep common attributes
+    $('#common_attr').keyup(function(event){
+
+        if(editor.getValue() != '' && event.keyCode!= '8'){
+            var reg = new RegExp('\\b'+this.value + '\\S*\\s*(?=\\=)','ig');
+            var match = editor.getValue().match(reg);
+
+            if(match){
+                $('#common_attr_tip').html(match[0]);
+            }
+
+            if(event.keyCode == '13'){
+                $('#common_attr').val($('#common_attr_tip').html());
+            }
+        }
+    });
+
+    // replace all
+    $('#btn_replace_all').click(function(){
+        if(editor.getValue() === ''){
+            showTip('Please input the code to be cleaned.');
+            return;
         }
 
-        var range = {
-            from: editor.getCursor(true),
-            to: editor.getCursor(false)
-        };
-        editor.autoFormatRange(range.from, range.to);
-        return editor.getValue();
-    },
+        var cache = editor.getValue();
+        $('#opt input:checked').each(function(){
+            cache = Clearner[$(this).val()](cache);
+        });
+
+        setCode(cache);
+    });
+
+    var isSelectAll = true;
+    $('#btn_dis_all').click(function(){
+
+        if(isSelectAll){
+            $('#opt input:checked').each(function(){
+                $(this).removeAttr('checked');
+            });
+            $(this).html('Check All');
+        }else{
+            $('#opt input').each(function(){
+                $(this).attr('checked', 'checked');
+            });
+            $(this).html('Cancel All');
+        }
+        isSelectAll = !isSelectAll;
+    });
+
+    // clean custom text
+    $('#btn_custom_txt').click(function(){
+        setCode(Clearner.cleanText(editor.getValue(),$('#custom_txt').val()));
+    });
+};
+
+/* basic */
+var Clearner = {
 
     clean: function(str, regEx, replaceStr){
         if(str && typeof str === 'string'){
@@ -141,151 +265,6 @@ var Clearner = {
         });
         return {'str':str, 'deleteAttr': deleteAttr};
     }
-};
-
-var setCode = function(code, noSave){
-
-    noSave = noSave || false;
-
-    if( !noSave && $('#code').val() != codeCache[codeCache.length-1]){
-        codeCache.push($('#code').val());
-        $('#btn_back').removeAttr('disabled').html('Undo('+codeCache.length+')');
-    }
-
-    $('#code').val(code);
-    editor.setValue(code);
-};
-
-var init = function(){
-
-    editor = CodeMirror.fromTextArea($('#code')[0], {
-        mode: "text/html", tabMode: "indent",
-        lineNumbers: true
-    });
-
-    $('#advanced').click(function(){
-        $('#advanced_panel').toggle();
-    });
-
-    $('#btn_format').click(function(){
-        setCode(Clearner.formatSelection(true));
-    });
-
-    $('#btn_format_selection').click(function(){
-        setCode(Clearner.formatSelection());
-    });
-
-    $('#btn_clean_attr').click(function(){
-        if($('#code').val() == ''){
-            alert('Please input the code to be cleaned.');
-            return;
-        }
-        var tag = $('#common_attr').val();
-
-        if(tag!=''){
-            setCode(Clearner.cleanAttr($('#code').val(),tag));
-        }else{
-            alert('Please input the name of the attribute.');
-        }
-    });
-
-    $('#btn_clean_all_custom').click(function(){
-        if($('#code').val() == ''){
-            alert('Please input the code to be cleaned.');
-            return;
-        }
-        var ret = Clearner.cleanAllCustomAttr($('#code').val());
-        if(ret && ret.deleteAttr!=''){
-            setCode(ret.str);
-
-            alert('Already removed：'+ ret.deleteAttr);
-        }else{
-            alert('Code has no custom attributes.');
-        }
-    });
-
-    $('#btn_custom').click(function(){
-        if($('#code').val() == ''){
-            alert('Please input the code to be cleaned.');
-            return;
-        }
-        if($('#custom_reg').val() == ''){
-            alert('Please input JavaScript Regular Expression.');
-        }else{
-            var reg = new RegExp($('#custom_reg').val(),"ig");
-            setCode(Clearner.clean($('#code').val(), reg, $('#custom_replace').val()));
-        }
-    });
-
-    $('#common_attr').keyup(function(event){
-
-        if($('#code').val() != '' && event.keyCode!= '8'){
-            var reg = new RegExp('\\b'+this.value + '\\S*\\s*(?=\\=)','ig');
-            var match = $('#code').val().match(reg);
-
-            if(match){
-                $('#common_attr_tip').html(match[0]);
-            }
-
-            if(event.keyCode == '13'){
-                $('#common_attr').val($('#common_attr_tip').html());
-            }
-        }
-    });
-
-    $('#btn_replace_all').click(function(){
-        if($('#code').val() == ''){
-            alert('Please input the code to be cleaned.');
-            return;
-        }
-
-        var cache = $('#code').val();
-        $('#opt input:checked').each(function(){
-            cache = Clearner[$(this).val()](cache);
-        });
-
-        setCode(cache);
-    });
-
-    var isSelectAll = true;
-    $('#btn_dis_all').click(function(){
-
-        if(isSelectAll){
-            $('#opt input:checked').each(function(){
-                $(this).removeAttr('checked');
-            });
-            $(this).html('Check All');
-        }else{
-            $('#opt input').each(function(){
-                $(this).attr('checked', 'checked');
-            });
-            $(this).html('Cancel All');
-        }
-        isSelectAll = !isSelectAll;
-    });
-
-    $('#btn_custom_txt').click(function(){
-        setCode(Clearner.cleanText($('#code').val(),$('#custom_txt').val()));
-    });
-
-    $('#btn_back').click(function(){
-
-        if(codeCache.length == 0 || typeof codeCache[codeCache.length-1] === 'undefined'){
-            return;
-        }
-
-        if(codeCache.length == 1){
-            $('#btn_back').attr('disabled', 'disabled');
-        }
-
-        setCode(codeCache.pop(), true);
-        $('#btn_back').html('Undo('+codeCache.length+')');
-    });
-
-    $('.CodeMirror').keyup(function(){
-        $('#code').val(editor.getValue());
-    });
-
 };
 
 $(function(){

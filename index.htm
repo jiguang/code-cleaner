@@ -16,10 +16,13 @@
     <script src="assets/htmlmixed.js"></script>
     <script src="assets/formatting.js"></script>
 
+    <!-- Zeroclipboard -->
+    <script src="assets/ZeroClipboard.js"></script>
+
     <!-- Custom -->
-    <link rel="stylesheet" href="assets/style.css?t=20121107">
-    <script type="text/javascript" src="assets/beautify-html.js"></script>
-    <script type="text/javascript" src="assets/cleaner.js?t=20121107"></script>
+    <link rel="stylesheet" href="assets/style.css?t=20121108141043">
+    <script type="text/javascript" src="assets/beautify-html.js?t=20121108141039"></script>
+    <script type="text/javascript" src="assets/cleaner.js?t=20121108141032"></script>
 
 </head>
 <body>
@@ -48,15 +51,19 @@
              <li><label for="opt_100"><input id="opt_100" title="remove blank line" name="" type="checkbox" value="cleanSpaceRow" checked="checked"/>blank</label></li>
          </ul>
          <div class="btn_wrap">
-              <button type="button" id="btn_replace_all" title="Execute all checked">Execute</button>
-              <button type="button" id="btn_format" title="format">Format</button>
-              <button type="button" id="btn_format_selection" title="format selection">Format Selection</button>
-              <button type="button" id="btn_back" title="Undo" disabled="disabled">Undo(0)</button>
+              <button type="button" id="btn_replace_all" title="Execute all checked">Execute Checked</button>
               <button type="button" id="btn_dis_all" title="Cancel all checked">Cancel All</button>
+
+              <span style="padding:0 5px;">|</span>
+              <button type="button" id="btn_undo" title="Undo">Undo</button>
+              <button type="button" id="btn_clear" title="Clear">Clear</button>
+              <button type="button" id="btn_copy" title="Copy code to clipboard">Copy Code</button>
          </div>
          </div>
 
-         <h2 id="advanced" class="fold">Advanced Options</h2>
+         <div id="tip" class="tip" style="display: none;">No tips</div>
+
+         <h2 id="advanced" class="tit">Advanced Options</h2>
          <div id="advanced_panel" class="advanced_panel" style="display:none;">
              <fieldset>
                  <label id="label_common_attr" for="common_attr">Clean Custom Attributes (ENTER)</label>

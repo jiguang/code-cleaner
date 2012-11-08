@@ -16,6 +16,7 @@
                                /\'(.*?)(\'|$)/,
                                /\/\*(.*?)(\*\/|$)/,
                                /\/\/.*/];
+
     var nonBreakableBlocks = [];
     for (var i = 0; i < nonBreakableRegexes.length; i++) {
       var curPos = 0;
