@@ -16,7 +16,7 @@ html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10
 .toolbar .opt li input{vertical-align:-2px;*vertical-align: middle; margin-right:10px;}
 .toolbar .opt li label{cursor:pointer;white-space:nowrap;}
 .toolbar .tit{font-size:14px;font-weight:normal; border:1px solid #ddd;  color:#666;height:26px; line-height:26px;padding-left:10px;margin-bottom: 10px; cursor:pointer; background-color:#fff;}
-.toolbar .tip{ border:1px solid #fbeed5; color:#c09853;height:26px; line-height:26px;padding:0 10px;margin-bottom:10px;  background-color:#fcf8e3;}
+.toolbar .tip{ border:1px solid #fbeed5; color:#c09853; line-height:26px;padding:0 10px;margin-bottom:10px;  background-color:#fcf8e3;}
 .toolbar .advanced_panel{padding:10px;position:relative;border:1px solid #ddd;margin-top:5px;background-color:#fff;}
 .toolbar .advanced_panel label{display:block;}
 .toolbar .advanced_panel input{width:190px;margin-bottom:5px;padding:2px;}
