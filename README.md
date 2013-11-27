@@ -1,7 +1,7 @@
 Code Cleaner V1.0
 ============
 
-访问地址：http://jiguang.github.io/code-cleaner/
+访问地址：[http://jiguang.github.io/code-cleaner/](http://jiguang.github.io/code-cleaner/)
 
 HTML 代码清理工具，可以快速清除多余标签以及其他冗余信息，使代码结构可复用。V1.0 版已实现功能：
 
@@ -12,4 +12,4 @@ HTML 代码清理工具，可以快速清除多余标签以及其他冗余信息
 * 替换全部文本
 * 代码高亮
 
-另有Chrome扩展版：https://chrome.google.com/webstore/detail/ajnfhahbkopfgiheliocnmeobejfdlfe?hl=en-US
+另有Chrome扩展版：[https://chrome.google.com/webstore/detail/ajnfhahbkopfgiheliocnmeobejfdlfe?hl=en-US](https://chrome.google.com/webstore/detail/ajnfhahbkopfgiheliocnmeobejfdlfe?hl=en-US)
